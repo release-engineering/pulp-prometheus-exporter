@@ -9,10 +9,9 @@ import json
 import logging
 import os
 import time
-import xmlrpc
+import xmlrpc.client
 
 import arrow
-from kobo.client.constants import TASK_STATES
 
 from prometheus_client.core import (
     REGISTRY,
@@ -45,17 +44,17 @@ metrics = {}
 
 
 error_states = [
-    TASK_STATES['FAILED'],
-    TASK_STATES['INTERRUPTED'],
-    TASK_STATES['TIMEOUT'],
+    'FAILED',
+    'INTERRUPTED',
+    'TIMEOUT',
 ]
 waiting_states = [
-    TASK_STATES['FREE'],
-    TASK_STATES['CREATED'],
-    TASK_STATES['ASSIGNED'],
+    'FREE',
+    'CREATED',
+    'ASSIGNED',
 ]
 in_progress_states = [
-    TASK_STATES['OPEN'],
+    'OPEN',
 ]
 
 

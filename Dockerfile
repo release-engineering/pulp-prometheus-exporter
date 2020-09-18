@@ -6,7 +6,6 @@ LABEL maintainer="Ralph Bean" \
 
 RUN dnf install -y --setopt=tsflags=nodocs \
                 python3-arrow \
-                python3-kobo-client \
                 python3-prometheus_client \
     && dnf clean all
 
