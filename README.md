@@ -1,7 +1,7 @@
-This is an experimental prometheus exporter for koji that just exposes information about tasks.
+This is an experimental prometheus exporter for "pub" that just exposes information about tasks.
 
-This polls koji-hub looking for tasks created since startup and exposes metrics about those tasks
+This polls pub-hub looking for tasks created since startup and exposes metrics about those tasks
 for a prometheus server.
 
-Instead of building on this, we should get a prometheus endpoint added to koji-hub itself, which
+Instead of building on this, we should get a prometheus endpoint added to pub-hub itself, which
 would be far less wasteful.
