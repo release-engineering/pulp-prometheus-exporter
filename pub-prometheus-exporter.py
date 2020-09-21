@@ -21,6 +21,8 @@ from prometheus_client.core import (
 )
 from prometheus_client import start_http_server
 
+START = None
+
 PUB_URL = os.environ['PUB_URL']  # Required
 
 p = xmlrpc.client.ServerProxy(PUB_URL + '/pub/xmlrpc/client')
@@ -39,7 +41,6 @@ DURATION_BUCKETS = [
     7200,  # 2 hours
 ]
 
-START = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
 metrics = {}
 
 
@@ -159,6 +160,9 @@ def only(pushes, states):
 
 
 def scrape():
+    global START
+    START = datetime.datetime.utcnow().date().strftime('%Y-%m-%d %H:%M:%S')
+
     pushes = retrieve_recent_pub_pushes()
 
     pub_pushes_total_family = CounterMetricFamily(
