@@ -77,7 +77,11 @@ def retrieve_recent_pulp_tasks():
     }
     response = requests.post(url, json=query, auth=AUTH)
     response.raise_for_status()
-    return response.json()
+    tasks = response.json()
+    for task in tasks:
+        # Replace None with the string 'undefined'
+        task['task_type'] = task['task_type'] or 'undefined'
+    return tasks
 
 
 def retrieve_open_pulp_tasks():
@@ -94,7 +98,11 @@ def retrieve_open_pulp_tasks():
     }
     response = requests.post(url, json=query, auth=AUTH)
     response.raise_for_status()
-    return response.json()
+    tasks = response.json()
+    for task in tasks:
+        # Replace None with the string 'undefined'
+        task['task_type'] = task['task_type'] or 'undefined'
+    return tasks
 
 
 def retrieve_waiting_pulp_tasks():
@@ -111,7 +119,11 @@ def retrieve_waiting_pulp_tasks():
     }
     response = requests.post(url, json=query, auth=AUTH)
     response.raise_for_status()
-    return response.json()
+    tasks = response.json()
+    for task in tasks:
+        # Replace None with the string 'undefined'
+        task['task_type'] = task['task_type'] or 'undefined'
+    return tasks
 
 
 def pulp_tasks_total(tasks):
