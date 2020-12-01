@@ -15,6 +15,9 @@ import time
 import arrow
 import requests
 
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+
 from prometheus_client.core import (
     REGISTRY,
     CounterMetricFamily,
@@ -22,6 +25,17 @@ from prometheus_client.core import (
     HistogramMetricFamily,
 )
 from prometheus_client import start_http_server
+
+retry_strategy = Retry(
+    total=3,
+    backoff_factor=1,
+    status_forcelist=[429, 500, 502, 503, 504],
+    method_whitelist=["POST", "HEAD", "GET", "OPTIONS"]
+)
+adapter = HTTPAdapter(max_retries=retry_strategy)
+session = requests.Session()
+session.mount("https://", adapter)
+session.mount("http://", adapter)
 
 START = None
 
@@ -75,7 +89,7 @@ def retrieve_recent_pulp_tasks():
             },
         },
     }
-    response = requests.post(url, json=query, auth=AUTH)
+    response = session.post(url, json=query, auth=AUTH)
     response.raise_for_status()
     tasks = response.json()
     for task in tasks:
@@ -96,7 +110,7 @@ def retrieve_open_pulp_tasks():
             },
         },
     }
-    response = requests.post(url, json=query, auth=AUTH)
+    response = session.post(url, json=query, auth=AUTH)
     response.raise_for_status()
     tasks = response.json()
     for task in tasks:
@@ -117,7 +131,7 @@ def retrieve_waiting_pulp_tasks():
             },
         },
     }
-    response = requests.post(url, json=query, auth=AUTH)
+    response = session.post(url, json=query, auth=AUTH)
     response.raise_for_status()
     tasks = response.json()
     for task in tasks:
