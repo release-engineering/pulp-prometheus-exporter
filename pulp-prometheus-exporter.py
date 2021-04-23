@@ -89,7 +89,7 @@ def retrieve_recent_pulp_tasks():
             },
         },
     }
-    response = session.post(url, json=query, auth=AUTH)
+    response = session.post(url, json=query, auth=AUTH, timeout=30)
     response.raise_for_status()
     tasks = response.json()
     for task in tasks:
@@ -110,7 +110,7 @@ def retrieve_open_pulp_tasks():
             },
         },
     }
-    response = session.post(url, json=query, auth=AUTH)
+    response = session.post(url, json=query, auth=AUTH, timeout=30)
     response.raise_for_status()
     tasks = response.json()
     for task in tasks:
@@ -131,7 +131,7 @@ def retrieve_waiting_pulp_tasks():
             },
         },
     }
-    response = session.post(url, json=query, auth=AUTH)
+    response = session.post(url, json=query, auth=AUTH, timeout=30)
     response.raise_for_status()
     tasks = response.json()
     for task in tasks:
