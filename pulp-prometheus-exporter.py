@@ -42,7 +42,12 @@ START = None
 PULP_URL = os.environ['PULP_URL']  # Required
 PULP_USERNAME = os.environ['PULP_USERNAME']  # Required
 PULP_PASSWORD = os.environ['PULP_PASSWORD']  # Required
+PULP_CERT = os.environ.get('PULP_CERT')  # Required
+PULP_KEY = os.environ.get('PULP_KEY')  # Required
 AUTH = (PULP_USERNAME, PULP_PASSWORD)
+
+# Required to access pulp with a service account certificate
+session.cert = (PULP_CERT, PULP_KEY)
 
 TASK_LABELS = ['task_type']
 
